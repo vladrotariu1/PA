@@ -19,7 +19,6 @@ public class Main {
                     matrix[i][j] = 1;
                     matrix[j][i] = 1;
                 }
-
             }
         }
 
@@ -42,7 +41,7 @@ public class Main {
     }
 
     /*
-     * Function that returns nodes visited by DFS
+     * Function that performs a recursively DFS search
      * */
     public static void DFS(int[][] matrix, int startNode, Vector<Integer> unvisitedNodes, Vector<Integer> nodes) {
 
@@ -54,7 +53,19 @@ public class Main {
                 DFS(matrix, i, unvisitedNodes, nodes);
             }
         }
+    }
 
+    public static void DFS(int[][] matrix, int startNode, Vector<Integer> nodes, int[] parentsVector) {
+
+        nodes.add(startNode);
+
+        for (int i = 0; i < matrix.length; i++) {
+
+            if (matrix[startNode][i] == 1 && !nodes.contains(i)) {
+                parentsVector[i] = startNode + 1;
+                DFS(matrix, i, nodes, parentsVector);
+            }
+        }
     }
 
     /*
@@ -86,7 +97,7 @@ public class Main {
     /*
      * Function that prints information about the connectivity in the graph
      * */
-    public static void isConnected(int[][] matrix) {
+    public static void connectionInfo(int[][] matrix) {
 
         Vector<Vector<Integer>> components = connectedComponents(matrix);
 
@@ -106,6 +117,37 @@ public class Main {
         }
     }
 
+    /*
+     * Function that prints information about the connectivity in the graph
+     * */
+    public static boolean isConnected(int[][] matrix) {
+
+        Vector<Vector<Integer>> components = connectedComponents(matrix);
+
+        return components.size() <= 1;
+    }
+
+    /*
+     * Function to get partial tree adjacency matrix of connected graph
+     */
+    public static int[][] partialTree(int[][] graph) {
+        if (!isConnected(graph)) {
+            return null;
+        }
+
+        int vertexCount = graph.length;
+        int[][] matrix = new int[vertexCount][vertexCount];
+        int[] parentsVector = new int[vertexCount];
+        DFS(graph,0, new Vector<>(64), parentsVector);
+
+        for (int i = 1; i < parentsVector.length; i++) {
+            matrix[i][parentsVector[i] - 1] = 1;
+            matrix[parentsVector[i] - 1][i] = 1;
+        }
+
+        return matrix;
+    }
+
     public static void main(String[] args) {
 
         // Creating scanner for stdin
@@ -118,7 +160,13 @@ public class Main {
 
         // Print the adjacency matrix and display information about the connectivity of the graph
         printMatrix(matrix);
-        isConnected(matrix);
+        connectionInfo(matrix);
 
+        // If graph is connected generate an adjacency matrix of partial tree
+        if (isConnected(matrix)) {
+            int[][] partialTree = partialTree(matrix);
+            // Print adjacency matrix of partial tree
+            printMatrix(partialTree);
+        }
     }
 }
