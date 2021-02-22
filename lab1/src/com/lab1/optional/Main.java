@@ -55,6 +55,9 @@ public class Main {
         }
     }
 
+    /*
+    * DFS that creates a parent array
+    * */
     public static void DFS(int[][] matrix, int startNode, Vector<Integer> nodes, int[] parentsVector) {
 
         nodes.add(startNode);
