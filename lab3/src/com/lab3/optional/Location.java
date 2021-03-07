@@ -1,8 +1,8 @@
-package com.lab3.compulsory;
+package com.lab3.optional;
 
 import java.util.HashMap;
 
-public abstract class Location {
+public abstract class Location implements Comparable<Location> {
 
     private String name;
     private String description;
@@ -68,5 +68,15 @@ public abstract class Location {
     // Add element to map
     public void addPath(int destination, int cost) {
         map.put(destination, cost);
+    }
+
+
+    @Override
+    public int compareTo(Location other) {
+        if (other instanceof Visitable && this instanceof Visitable) {
+            return ((Visitable) this).getOpeningHour().compareTo(((Visitable) other).getOpeningHour());
+        } else {
+            throw new ClassCastException ("Uncomparable objects!");
+        }
     }
 }

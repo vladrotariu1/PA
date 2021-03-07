@@ -1,8 +1,8 @@
-package com.lab3.compulsory;
+package com.lab3.optional;
 
 import java.time.LocalTime;
 
-public class Church extends Location implements Visitable, Classifiable{
+public class Church extends Location implements Visitable, Classifiable {
 
     private LocalTime openingHour;
     private LocalTime closingHour;

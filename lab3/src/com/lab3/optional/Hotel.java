@@ -1,4 +1,4 @@
-package com.lab3.compulsory;
+package com.lab3.optional;
 
 public class Hotel extends Location implements Classifiable, Payable {
 
