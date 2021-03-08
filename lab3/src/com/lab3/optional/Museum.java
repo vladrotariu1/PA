@@ -1,22 +1,23 @@
-package com.lab3.compulsory;
+package com.lab3.optional;
 
 import java.time.LocalTime;
 
-public class Church extends Location implements Visitable, Classifiable{
+public class Museum extends Location implements Visitable, Classifiable, Payable {
 
     private LocalTime openingHour;
     private LocalTime closingHour;
-    private String religion;
+    private String type;
+    private float entryFee;
     private float rank;
 
 
 
     //Constructors
-    public Church() {
+    public Museum() {
         super();
     }
 
-    public Church(String name) {
+    public Museum(String name) {
         super(name);
     }
 
@@ -30,8 +31,12 @@ public class Church extends Location implements Visitable, Classifiable{
         this.closingHour = closingHour;
     }
 
-    public void setReligion(String religion) {
-        this.religion = religion;
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setEntryFee(float entryFee) {
+        this.entryFee = entryFee;
     }
 
     public void setRank(float rank) {
@@ -50,8 +55,13 @@ public class Church extends Location implements Visitable, Classifiable{
         return closingHour;
     }
 
-    public String getReligion() {
-        return religion;
+    public String getType() {
+        return type;
+    }
+
+    @Override
+    public float getPrice() {
+        return entryFee;
     }
 
     @Override

@@ -1,8 +1,9 @@
-package com.lab3.compulsory;
+package com.lab3.optional;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.Map;
 
 public class City {
 
@@ -73,5 +74,21 @@ public class City {
                 System.out.println(i + " -> " + entry.getKey() + " cost : " + entry.getValue() + "\n");
             }
         }
+    }
+
+
+    // Get the locations that are visitable and not payable
+    public ArrayList<Location> visitableNotPayable() {
+
+        ArrayList<Location> locationsList = new ArrayList<>(10);
+
+        for (Location l : locations) {
+            if (l instanceof Visitable && !(l instanceof Payable)) {
+                locationsList.add(l);
+            }
+        }
+
+        Collections.sort(locationsList);
+        return locationsList;
     }
 }
