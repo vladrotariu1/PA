@@ -37,4 +37,9 @@ public abstract class Item implements Serializable {
     public void setDate(Date date) {
         this.date = date;
     }
+
+    @Override
+    public String toString() {
+        return path;
+    }
 }

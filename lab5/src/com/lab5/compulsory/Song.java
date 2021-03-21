@@ -9,7 +9,7 @@ public class Song extends Item implements Playable{
 
     public Song(String path) throws InvalidMp3FileException {
         super(path);
-        if (isPlayable(path))
+        if (!isPlayable(path))
             throw new InvalidMp3FileException("Invalid file format exception. The file is not a song");
     }
 
@@ -24,6 +24,6 @@ public class Song extends Item implements Playable{
         }
 
         Matcher m = p.matcher(str);
-        return !m.matches();
+        return m.matches();
     }
 }

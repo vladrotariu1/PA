@@ -9,7 +9,7 @@ public class Image extends Item implements Playable{
 
     public Image(String path) throws InvalidImageFileException {
         super(path);
-        if (isPlayable(path))
+        if (!isPlayable(path))
             throw new InvalidImageFileException("Invalid file format exception. The file is not an image");
     }
 
@@ -24,6 +24,6 @@ public class Image extends Item implements Playable{
         }
 
         Matcher m = p.matcher(str);
-        return !m.matches();
+        return m.matches();
     }
 }

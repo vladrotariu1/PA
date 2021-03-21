@@ -41,9 +41,13 @@ public class Catalog implements Serializable {
     }
 
     // Print the content of the catalog
-    public void list() {
-        for (Item item : itemList)
-            System.out.println(item);
+    public String list() {
+        StringBuilder s = new StringBuilder();
+        for (Item item : itemList) {
+            s.append(item.toString());
+            s.append('\n');
+        }
+        return s.toString();
     }
 
     public Item findById(UUID id) {
