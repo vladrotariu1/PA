@@ -1,16 +1,64 @@
 package com.lab5.compulsory;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File;
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.*;
+import java.awt.Desktop;
 
-public class Catalog {
-    private List<MultimediaItem> catalog = new ArrayList<>();
+public class Catalog implements Serializable {
 
-    public void add(MultimediaItem item) {
-        catalog.add(item);
+    private List<Item> itemList;
+    private String path;
+
+    public Catalog(String path) {
+        this.path = path;
     }
 
-    public List<MultimediaItem> list() {
-        return catalog;
+    public Catalog(List<Item> itemList) {
+        this.itemList = itemList;
     }
+
+    public List<Item> getItemList() {
+        return itemList;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public void setItemList(List<Item> itemList) {
+        this.itemList = itemList;
+    }
+
+    // Add new item to the catalog
+    public void add(Item i) {
+        this.itemList.add(i);
+    }
+
+    // Print the content of the catalog
+    public void list() {
+        for (Item item : itemList)
+            System.out.println(item);
+    }
+
+    public Item findById(UUID id) {
+        return itemList.stream()
+                .filter(item -> item.getId().equals(id)).findFirst().orElse(null);
+    }
+
+    // Open file using the native operating system application
+    public void play(UUID id) {
+        String pathToItem = findById(id).getPath();
+        try {
+            Desktop.getDesktop().open(new File(pathToItem));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

@@ -1,22 +1,22 @@
 package com.lab5.compulsory;
 
-import com.lab5.exceptions.InvalidMp3FileException;
+import com.lab5.exceptions.InvalidImageFileException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Song extends Item implements Playable{
+public class Image extends Item implements Playable{
 
-    public Song(String path) throws InvalidMp3FileException {
+    public Image(String path) throws InvalidImageFileException {
         super(path);
         if (isPlayable(path))
-            throw new InvalidMp3FileException("Invalid file format exception. The file is not a song");
+            throw new InvalidImageFileException("Invalid file format exception. The file is not an image");
     }
 
     @Override
     public boolean isPlayable(String str) {
         String regex
-                = "([^\\s]+(\\.(?i)(mp3))$)";
+                = "([^\\s]+(\\.(?i)(jpe?g|png))$)";
         Pattern p = Pattern.compile(regex);
 
         if (str == null) {
