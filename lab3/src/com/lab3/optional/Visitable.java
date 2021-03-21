@@ -17,7 +17,7 @@ public interface Visitable {
 
     static Duration getVisitingDuration(Location location) {
         if (location instanceof Visitable) {
-            return Duration.between(((Visitable) location).getClosingHour(), ((Visitable) location).getOpeningHour());
+            return Duration.between(((Visitable) location).getOpeningHour(), ((Visitable) location).getClosingHour());
         } else {
             throw new ClassCastException ("Not a visitable object");
         }

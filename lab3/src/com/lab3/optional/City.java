@@ -42,6 +42,8 @@ public class City {
         return locations;
     }
 
+    public Location getLocationOfIndex(int index) { return locations.get(index); }
+
 
     // Add new location in array list
     public void addLocation(Location location) {

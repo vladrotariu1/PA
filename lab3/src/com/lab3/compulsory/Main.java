@@ -7,6 +7,7 @@ public class Main {
 
         City city = new City("Iasi");
 
+        // Add 6 Locations to the City object
         city.addLocation(new Hotel("International"));
         city.addLocation(new Museum("Bojdeuca"));
         city.addLocation(new Museum("Muzeul Unirii"));
@@ -14,6 +15,8 @@ public class Main {
         city.addLocation(new Church("Mitropolia"));
         city.addLocation(new Restaurant("Salsa"));
 
+
+        // Add the paths and display them with the afferent cost
         city.addPath(0, 1, 10);
         city.addPath(0, 2, 50);
         city.addPath(1, 2, 20);

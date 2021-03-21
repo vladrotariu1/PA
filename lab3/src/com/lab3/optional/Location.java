@@ -71,6 +71,15 @@ public abstract class Location implements Comparable<Location> {
     }
 
 
+    // Function that returns the cost from current location to location with index locationIndex
+    public int costToIndex(int locationIndex) {
+        if(map.get(locationIndex) == null)
+            return (int)(1e9 + 10);
+        else
+            return map.get(locationIndex);
+    }
+
+
     @Override
     public int compareTo(Location other) {
         if (other instanceof Visitable && this instanceof Visitable) {
