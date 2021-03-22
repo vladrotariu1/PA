@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact name="lab5:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/lab5_jar</output-path>
+    <root id="root">
+      <element id="archive" name="lab5.jar">
+        <element id="module-output" name="lab5" />
+      </element>
+      <element id="library" level="project" name="Maven: org.freemarker:freemarker:2.3.23" />
+    </root>
+  </artifact>
+</component>
