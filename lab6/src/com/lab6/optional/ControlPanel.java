@@ -1,15 +1,11 @@
-package com.lab6.compulsory;
+package com.lab6.optional;
 
-import com.sun.prism.Image;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Paths;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ControlPanel extends JPanel {
 
@@ -18,11 +14,14 @@ public class ControlPanel extends JPanel {
     JButton loadBtn = new JButton("Load");
     JButton resetBtn = new JButton("Reset");
     JButton exitBtn = new JButton("Exit");
+    List<Shape> shapesList;
 
     public ControlPanel(MainFrame frame) {
         this.frame = frame;
+        shapesList = new ArrayList<Shape>(10);
         init();
     }
+
     private void init() {
         setLayout(new GridLayout(1, 4));
 
@@ -51,12 +50,16 @@ public class ControlPanel extends JPanel {
 
         if (response == JFileChooser.APPROVE_OPTION) {
             try {
-                BufferedImage img = ImageIO.read(new File(fileChooser.getSelectedFile().getAbsolutePath()));
-                frame.getCanvas().setBackgroundImage(img);
-            } catch (IOException e) {
+                ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileChooser.getSelectedFile().getAbsolutePath()));
+                shapesList = (List<Shape>) ois.readObject();
+
+            } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }
+        System.out.println(shapesList.size());
+        for (Shape s : shapesList)
+            frame.getCanvas().drawShape(s);
     }
 
     private void save(ActionEvent e) {
@@ -64,11 +67,19 @@ public class ControlPanel extends JPanel {
         int response = fileChooser.showSaveDialog(null);
 
         if (response == JFileChooser.APPROVE_OPTION) {
-            try {
-                ImageIO.write(frame.getCanvas().getBackgroundImage(), "PNG", new File(Paths.get("photos/").toAbsolutePath().normalize().toString() + "/test.png"));
-            } catch (IOException ex) {
-                System.err.println(ex);
+            try (ObjectOutputStream oos = new ObjectOutputStream(
+                    new FileOutputStream(fileChooser.getSelectedFile().getAbsolutePath()))) {
+                System.out.print(fileChooser.getSelectedFile().getAbsolutePath());
+                oos.writeObject(shapesList);
+            } catch (FileNotFoundException fileNotFoundException) {
+                fileNotFoundException.printStackTrace();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
             }
         }
+    }
+
+    public void addShape(Shape s) {
+        shapesList.add(s);
     }
 }

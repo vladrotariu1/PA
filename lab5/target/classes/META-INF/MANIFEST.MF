@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Main-Class: com.lab5.optional.Main
+Class-Path: freemarker-2.3.23.jar
+

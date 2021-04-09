@@ -1,6 +1,4 @@
-package com.lab6.compulsory;
-
-import com.lab6.optional.RegularPolygon;
+package com.lab6.optional;
 
 import javax.swing.*;
 import java.awt.*;
@@ -70,8 +68,49 @@ public class DrawingPanel extends JPanel {
 
             color = new Color(red , green , blue);
         }
+
+        Shape shape;
+
+        switch(frame.getShapePanel().getComboBox().getSelectedIndex()) {
+            case 0: {
+                shape = new Star(x, y, radius, sides);
+                break;
+            }
+
+            case 1:
+                int width = (Integer)configPanel.getWidthField().getValue();
+                int height = (Integer)configPanel.getHeightField().getValue();
+                shape = new Rectangle(x, y, width, height);
+                break;
+
+            default:
+                shape = new RegularPolygon(x, y, radius, sides);
+                break;
+        }
         graphics.setColor(color);
-        graphics.fill(new RegularPolygon(x, y, radius, sides));
+        graphics.fill(shape);
+        frame.getControlPanel().addShape(shape);
+    }
+
+    public void drawShape(Shape shape) {
+        ConfigPanel configPanel = frame.getConfigPanel();
+
+        Color color;
+        String colorString = (String) configPanel.getColorCombo().getSelectedItem();
+        if(colorString.equals("Red"))
+            color = Color.RED;
+        else
+        {
+            Random rand = new Random();
+            int red = rand.nextInt(255);
+            int green = rand.nextInt(255);
+            int blue = rand.nextInt(255);
+
+            color = new Color(red , green , blue);
+        }
+
+        graphics.setColor(color);
+        graphics.fill(shape);
     }
 
     public void resetBackground() {
