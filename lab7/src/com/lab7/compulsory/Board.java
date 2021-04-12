@@ -1,24 +1,35 @@
 package com.lab7.compulsory;
 
-import java.util.List;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class Board {
-    public List<Token> board = new ArrayList<>();
 
-    //temporary until list successfully implemented
-    public int[][] tokenList;
-    Random randomValue = new Random();
+    private final int tokensNumber = 100;
+    private ArrayList<Token> tokens;
 
-    public Board(int maxPositions) {
-        for (int position1Counter = 1; position1Counter <= maxPositions; position1Counter++)
-            for (int position2Counter = 1; position2Counter <= maxPositions; position2Counter++)
-                tokenList[position1Counter][position2Counter] = (randomValue.nextInt(100) + 1);
+    public Board() {
+        tokens = new ArrayList<>(100);
+        generateTokens();
     }
 
-    //temporary until list successfully implemented
-    public void removeValue(int position1, int position2) {
-        tokenList[position1][position2] = -1;
+    private void generateTokens() {
+        for (int i = 0; i < tokensNumber; i++)
+            tokens.add(new Token());
+    }
+
+    public ArrayList<Token> getTokens() {
+        return tokens;
+    }
+
+    public Token getToken(int id) {
+        return tokens.remove(id);
+    }
+
+    public Token getToken() {
+        return tokens.remove(tokens.size() - 1);
+    }
+
+    public boolean gameOver() {
+        return tokens.isEmpty();
     }
 }

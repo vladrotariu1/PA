@@ -1,33 +1,36 @@
 package com.lab7.compulsory;
 
+import java.util.Collections;
+import java.util.Map;
 import java.util.Random;
 
 public class Token {
-    private int position1, position2, value;
-    public Token(int position1, int position2) {
-        this.position1 = position1;
-        this.position2 = position2;
-        Random randomValue = new Random();
-        this.value = randomValue.nextInt(100) + 1;
+
+    private final int maximumPairValue = 10;
+    private final int maximumTokenSpecificValue = 5;
+    private final int tokenSpecificValue;
+    private final Map<Integer, Integer> pair;
+
+    public Token() {
+        tokenSpecificValue = generateTokenSpecificValue();
+        pair = Collections.singletonMap(generatePairValue(), generatePairValue());
     }
 
-    public int getPosition1() {
-        return position1;
+    public int getTokenSpecificValue() {
+        return tokenSpecificValue;
     }
 
-    public void setPosition1(int position1) {
-        this.position1 = position1;
+    public Map<Integer, Integer> getPair() {
+        return pair;
     }
 
-    public int getPosition2() {
-        return position2;
+    private int generateTokenSpecificValue() {
+        Random rand = new Random();
+        return rand.nextInt(maximumTokenSpecificValue) + 1;
     }
 
-    public void setPosition2(int position2) {
-        this.position2 = position2;
-    }
-
-    public int getValue() {
-        return value;
+    private int generatePairValue() {
+        Random rand = new Random();
+        return rand.nextInt(maximumTokenSpecificValue) + 1;
     }
 }
