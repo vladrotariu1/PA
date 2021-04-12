@@ -3,14 +3,17 @@ package com.lab7.compulsory;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
-public class Player {
+public class Player implements Runnable{
 
-    private String name;
-    private Board board;
+    private final String name;
+    private final Board board;
     private ArrayList<Token> tokens;
     private ArrayList<ArrayList<Token>> tokensFormations;
     private ArrayList<Token> unusedTokens;
+    private Lock lock = new ReentrantLock();
 
     public Player(Board board, String name) {
         this.name = name;
@@ -20,13 +23,21 @@ public class Player {
         unusedTokens = new ArrayList<>(10);
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void chooseToken(int id) {
         Token token = board.getToken(id);
         tokens.add(token);
         unusedTokens.add(token);
     }
 
-    public void chooseToken() {
+    public void chooseToken() throws NoTokensLeftException {
+        synchronized(board) {
+            if (board.gameOver())
+                throw new NoTokensLeftException();
+        }
         Token token = board.getToken();
         tokens.add(token);
         unusedTokens.add(token);
@@ -64,5 +75,39 @@ public class Player {
 
         return lastTokenPair.get(lastTokenPair.keySet().iterator().next()).
                 equals(firstTokenPair.keySet().iterator().next());
+    }
+
+    private int formationScore(int formationId) {
+        int score = 0;
+        ArrayList<Token> formation = tokensFormations.get(formationId);
+
+        for (Token token : formation) {
+            score += token.getTokenSpecificValue();
+        }
+
+        return formation.size() == Token.getMaximumPairValue() ? score * 2 : score;
+    }
+
+    public int score() {
+        int score = 0;
+        for (int i = 0; i < tokensFormations.size(); i++) {
+            if (!invalidFormation(i)) {
+                score += formationScore(i);
+            }
+        }
+        return score;
+    }
+
+    @Override
+    public void run() {
+        while(!board.gameOver()) {
+            lock.lock();
+            try {
+                chooseToken();
+            } catch (NoTokensLeftException e) {
+                e.printStackTrace();
+            }
+            lock.unlock();
+        }
     }
 }

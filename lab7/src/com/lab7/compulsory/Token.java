@@ -6,8 +6,8 @@ import java.util.Random;
 
 public class Token {
 
-    private final int maximumPairValue = 10;
-    private final int maximumTokenSpecificValue = 5;
+    private static final int maximumPairValue = 10;
+    private static final int maximumTokenSpecificValue = 5;
     private final int tokenSpecificValue;
     private final Map<Integer, Integer> pair;
 
@@ -18,6 +18,14 @@ public class Token {
 
     public int getTokenSpecificValue() {
         return tokenSpecificValue;
+    }
+
+    public static int getMaximumPairValue() {
+        return maximumPairValue;
+    }
+
+    public static int getMaximumTokenSpecificValue() {
+        return maximumTokenSpecificValue;
     }
 
     public Map<Integer, Integer> getPair() {
