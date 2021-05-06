@@ -4,6 +4,9 @@
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd%22%3E">
     <persistence-unit name="Laborator9">
 
+        <class>com.lab9.entities.GenresEntity</class>
+        <class>com.lab9.entities.ChartsEntity</class>
+
         <properties>
             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
             <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/pa_lab9" />
