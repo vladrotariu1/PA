@@ -1,11 +1,12 @@
 package com.lab10.Client;
 
-import com.lab10.Commands.Command;
+import com.lab10.Commands.CommunicationObjects.Command;
+import com.lab10.Commands.CommunicationObjects.Cookie;
+import com.lab10.Commands.CommunicationObjects.Response;
 
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
-import java.util.Scanner;
 
 public class Request {
     private final Socket socket;
@@ -14,44 +15,30 @@ public class Request {
         this.socket = socket;
     }
 
-    public String getRequestResponse(String request) throws IOException {
+    public Response getRequestResponse(String request, Cookie cookie) throws IOException {
 
         ObjectOutputStream OOS = new ObjectOutputStream(
                 socket.getOutputStream());
 
-        BufferedReader in
-                = new BufferedReader(new InputStreamReader(
-                        socket.getInputStream()));
+        ObjectInputStream OIS = new ObjectInputStream(
+                socket.getInputStream());
 
-        OOS.writeObject(new Command(request));
+        Command command = new Command(request);
+        command.setCookie(cookie);
+        OOS.writeObject(command);
 
         try {
-            String line = in.readLine();
-            StringBuilder response = new StringBuilder();
-
-            while(!line.equals("END")) {
-                response.append(line);
-                response.append("\n");
-                line = in.readLine();
-            }
-
-            return response.toString();
-
+            return (Response) OIS.readObject();
 
         }  catch (SocketException e){
-
-            return "SOCKET_TIMEOUT";
+            return new Response("SOCKET_TIMEOUT", null);
 
         } catch (Exception e){
-
             e.printStackTrace();
+            return new Response("Unexpected Error", null);
 
         } finally {
-
             socket.close();
-
         }
-
-        return null;
     }
 }

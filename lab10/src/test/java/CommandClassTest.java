@@ -1,4 +1,4 @@
-import com.lab10.Commands.Command;
+import com.lab10.Commands.CommunicationObjects.Command;
 
 import java.util.Scanner;
 

@@ -13,7 +13,7 @@ public class UsersEntityManager implements AbstractRepositoryInterface<UsersEnti
     private static final EntityManagerFactory EMF = SingletonEntity.getEntityManagerFactory();
 
     @Override
-    public void create(UsersEntity entity) {
+    public void create(UsersEntity entity) throws Exception{
         EntityManager entityManager = EMF.createEntityManager();
         EntityTransaction entityTransaction = null;
 
@@ -27,6 +27,7 @@ public class UsersEntityManager implements AbstractRepositoryInterface<UsersEnti
                 entityTransaction.rollback();
             }
             ex.printStackTrace();
+            throw ex;
         } finally {
             entityManager.close();
         }
@@ -47,7 +48,7 @@ public class UsersEntityManager implements AbstractRepositoryInterface<UsersEnti
         return user;
     }
 
-    public UsersEntity findByName(String name) {
+    public UsersEntity findByName(String name) throws Exception{
         EntityManager em = EMF.createEntityManager();
 
         String query = "SELECT user FROM UsersEntity user WHERE user.name like :userNAME";

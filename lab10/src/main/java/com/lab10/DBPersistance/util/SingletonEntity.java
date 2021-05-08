@@ -8,6 +8,11 @@ public class SingletonEntity {
 
     private SingletonEntity(){}
 
+    public static void createEntityManagerFactory() {
+        if (EMF == null)
+            EMF = Persistence.createEntityManagerFactory("Laborator10");
+    }
+
     public static EntityManagerFactory getEntityManagerFactory() {
         if (EMF == null)
             EMF = Persistence.createEntityManagerFactory("Laborator10");

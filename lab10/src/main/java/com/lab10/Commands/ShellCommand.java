@@ -2,6 +2,14 @@ package com.lab10.Commands;
 
 import java.util.ArrayList;
 
-public interface ShellCommand {
-    void execute(ArrayList<String> parameters);
+public abstract class ShellCommand {
+    private final ArrayList<String> parameters;
+
+    public ShellCommand(ArrayList<String> parameters) {
+        this.parameters = parameters;
+    }
+
+    public ArrayList<String> getParameters() {
+        return parameters;
+    }
 }

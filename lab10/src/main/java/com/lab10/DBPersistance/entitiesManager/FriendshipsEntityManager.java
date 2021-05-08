@@ -9,7 +9,7 @@ public class FriendshipsEntityManager implements AbstractRepositoryInterface<Fri
     private static final EntityManagerFactory EMF = SingletonEntity.getEntityManagerFactory();
 
     @Override
-    public void create(FriendshipsEntity entity) {
+    public void create(FriendshipsEntity entity) throws Exception{
         EntityManager entityManager = EMF.createEntityManager();
         EntityTransaction entityTransaction = null;
 
@@ -23,6 +23,7 @@ public class FriendshipsEntityManager implements AbstractRepositoryInterface<Fri
                 entityTransaction.rollback();
             }
             ex.printStackTrace();
+            throw ex;
         } finally {
             entityManager.close();
         }
@@ -36,6 +37,22 @@ public class FriendshipsEntityManager implements AbstractRepositoryInterface<Fri
         TypedQuery<FriendshipsEntity> tq = em.createQuery(query, FriendshipsEntity.class);
 
         tq.setParameter("friendshipID", id);
+
+        FriendshipsEntity friendship = tq.getSingleResult();
+        em.close();
+
+        return friendship;
+    }
+
+    public FriendshipsEntity findFriendship(int userId1, int userId2) {
+        EntityManager em = EMF.createEntityManager();
+
+        String query = "SELECT friendship FROM FriendshipsEntity friendship " +
+                "WHERE friendship.friendship.id_1 = :friendshipID1 AND friendship.friendship.id_2 = :friendshipID2";
+        TypedQuery<FriendshipsEntity> tq = em.createQuery(query, FriendshipsEntity.class);
+
+        tq.setParameter("friendshipID1", userId1);
+        tq.setParameter("friendshipID2", userId2);
 
         FriendshipsEntity friendship = tq.getSingleResult();
         em.close();
