@@ -1,6 +1,8 @@
 import com.lab10.DBPersistance.entities.FriendshipsEntity;
 import com.lab10.DBPersistance.entitiesManager.FriendshipsEntityManager;
 
+import java.util.ArrayList;
+
 public class FriendshipEntityTest {
     public static void main(String[] args) throws Exception {
         //FriendshipsEntity f = new FriendshipsEntity();
@@ -8,6 +10,7 @@ public class FriendshipEntityTest {
 
         FriendshipsEntityManager friendshipsEM = new FriendshipsEntityManager();
         //friendshipsEM.create(f);
-        FriendshipsEntity f = friendshipsEM.findFriendship(1,1);
+        ArrayList<FriendshipsEntity> friendships = friendshipsEM.getFriendships();
+        System.out.println(friendships);
     }
 }

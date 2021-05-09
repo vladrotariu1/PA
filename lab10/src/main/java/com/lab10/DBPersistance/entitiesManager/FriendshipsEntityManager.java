@@ -4,6 +4,7 @@ import com.lab10.DBPersistance.entities.FriendshipsEntity;
 import com.lab10.DBPersistance.util.SingletonEntity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 
 public class FriendshipsEntityManager implements AbstractRepositoryInterface<FriendshipsEntity>{
     private static final EntityManagerFactory EMF = SingletonEntity.getEntityManagerFactory();
@@ -58,5 +59,13 @@ public class FriendshipsEntityManager implements AbstractRepositoryInterface<Fri
         em.close();
 
         return friendship;
+    }
+
+    public ArrayList<FriendshipsEntity> getFriendships() {
+        EntityManager em = EMF.createEntityManager();
+        String query = "SELECT friendship FROM FriendshipsEntity friendship";
+        TypedQuery<FriendshipsEntity> tq = em.createQuery(query, FriendshipsEntity.class);
+
+        return (ArrayList<FriendshipsEntity>) tq.getResultList();
     }
 }

@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
+import java.util.ArrayList;
 
 public class UsersEntityManager implements AbstractRepositoryInterface<UsersEntity>{
     private static final EntityManagerFactory EMF = SingletonEntity.getEntityManagerFactory();
@@ -60,5 +61,13 @@ public class UsersEntityManager implements AbstractRepositoryInterface<UsersEnti
         em.close();
 
         return user;
+    }
+
+    public ArrayList<UsersEntity> getAllUsers() {
+        EntityManager em = EMF.createEntityManager();
+        String query = "SELECT user FROM UsersEntity user";
+        TypedQuery<UsersEntity> tq = em.createQuery(query, UsersEntity.class);
+
+        return (ArrayList<UsersEntity>) tq.getResultList();
     }
 }

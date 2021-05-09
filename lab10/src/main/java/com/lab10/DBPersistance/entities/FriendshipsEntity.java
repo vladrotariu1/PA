@@ -18,6 +18,10 @@ public class FriendshipsEntity {
         return friendship;
     }
 
+    public int getUser1Id() { return friendship.getId_1(); }
+
+    public int getUser2Id() { return friendship.getId_2(); }
+
     public void setFriendship(int id_1, int id_2) {
         this.friendship = new Key(id_1, id_2);
     }
